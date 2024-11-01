@@ -1,0 +1,6 @@
+2024-10-28T19:35:52.062Z - Video content: 0x
+2024-10-28T19:36:41.825Z - Video content: Test Video,TvIm8MayUauf5he3hziQHcXgnaUNdrWZy-8v9ysWRH8,0xE3A1a10c9785bC98e8cBdfde511F6b6d3F8B3585,Test Description,0xba8172DcaB4A44DcE5B7bFc00236188697fe805d,1730142247
+2024-10-28T20:07:18.439Z - Video content: Test Video,BdAsXjL2eCtq3W7X6xteQe-rqyZHNIF6cCoffd9YVWw,0xE3A1a10c9785bC98e8cBdfde511F6b6d3F8B3585,Test Description,0xba8172DcaB4A44DcE5B7bFc00236188697fe805d,1730145966
+2024-10-28T20:07:37.345Z - Error getting video content: missing revert data (action="call", data=null, reason=null, transaction={ "data": "0x31ad5ad2", "from": "0xba8172DcaB4A44DcE5B7bFc00236188697fe805d", "to": "0xCf02BDf965e13E55Bd4edE2EE055Fd193f34a60B" }, invocation=null, revert=null, code=CALL_EXCEPTION, version=6.13.4)
+2024-10-28T20:13:19.633Z - Video content: Test Video,j8ftVf4rWGx0GHn8nJeLDFS3YDV4o2zQsLacS_4VaIM,0xE3A1a10c9785bC98e8cBdfde511F6b6d3F8B3585,Test Description,0xba8172DcaB4A44DcE5B7bFc00236188697fe805d,1730146344
+2024-10-28T20:13:28.763Z - Error getting video content: missing revert data (action="call", data=null, reason=null, transaction={ "data": "0x31ad5ad2", "from": "0xba8172DcaB4A44DcE5B7bFc00236188697fe805d", "to": "0x7b6e1E89C5C81Be38D9444B6E5585d404431F9d8" }, invocation=null, revert=null, code=CALL_EXCEPTION, version=6.13.4)
