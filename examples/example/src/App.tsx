@@ -4,11 +4,13 @@ import './App.css';
 import { getDeployedChannels } from './interactions/channelFactory/getDeployedChannels';
 import { BrowserProvider } from 'ethers';
 import CreateChannelForm from './interactions/components/createChannelForm';
+import GetChannelInfoForm from './interactions/components/getChannelInfoForm';
 
 function App() {
   const { connectWallet, connectedAddress } = useBlockchain();
   const [deployedChannels, setDeployedChannels] = useState<string[] | null>(null);
   const [showCreateChannelForm, setShowCreateChannelForm] = useState(false);
+  const [showGetChannelInfoForm, setShowGetChannelInfoForm] = useState(false);
 
   useEffect(() => {
     const fetchDeployedChannels = async () => {
@@ -39,8 +41,13 @@ function App() {
             onCreateChannelSuccess={() => setShowCreateChannelForm(false)}
             onCancel={() => setShowCreateChannelForm(false)}
           />
+        ) : showGetChannelInfoForm ? (
+          <GetChannelInfoForm />
         ) : (
-          <button onClick={() => setShowCreateChannelForm(true)}>Create Channel Form</button>
+          <div>
+            <button onClick={() => setShowCreateChannelForm(true)}>Create Channel Form</button>
+            <button onClick={() => setShowGetChannelInfoForm(true)}>Get Channel Info Form</button>
+          </div>
         )}
         {deployedChannels ? (
           <div>
