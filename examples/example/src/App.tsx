@@ -47,8 +47,6 @@ function App() {
             onCreateChannelSuccess={() => setShowCreateChannelForm(false)}
             onCancel={() => setShowCreateChannelForm(false)}
           />
-        ) : showGetChannelInfoForm ? (
-          <GetChannelInfoForm />
         ) : (
           <div>
             <button onClick={() => setShowCreateChannelForm(true)}>Create Channel Form</button>
