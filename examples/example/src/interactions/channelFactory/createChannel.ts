@@ -1,4 +1,3 @@
-// Example: src/interactionschannelFactory/createChannel.ts
 import { ethers } from 'ethers';
 import { ChannelFactoryABI, FACTORY_CONTRACT_ADDRESS } from '../constants';
 
