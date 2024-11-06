@@ -4,11 +4,13 @@ import './App.css';
 import { getDeployedChannels } from './interactions/channelFactory/getDeployedChannels';
 import { BrowserProvider } from 'ethers';
 import CreateChannelForm from './interactions/components/createChannelForm';
+import ChannelContractView from './interactions/components/channelContractView';
 
 function App() {
   const { connectWallet, connectedAddress } = useBlockchain();
   const [deployedChannels, setDeployedChannels] = useState<string[] | null>(null);
   const [showCreateChannelForm, setShowCreateChannelForm] = useState(false);
+  const [selectedChannelAddress, setSelectedChannelAddress] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDeployedChannels = async () => {
@@ -33,26 +35,35 @@ function App() {
         ) : (
           <p>Connected to: {connectedAddress}</p>
         )}
-        {showCreateChannelForm ? (
+        {selectedChannelAddress ? (
+          <ChannelContractView
+            channelAddress={selectedChannelAddress}
+            onBack={() => setSelectedChannelAddress(null)}
+          />
+        ) : showCreateChannelForm ? (
           <CreateChannelForm
             connectedAddress={connectedAddress}
             onCreateChannelSuccess={() => setShowCreateChannelForm(false)}
             onCancel={() => setShowCreateChannelForm(false)}
           />
         ) : (
-          <button onClick={() => setShowCreateChannelForm(true)}>Create Channel Form</button>
-        )}
-        {deployedChannels ? (
           <div>
-            <h2>Deployed Channels:</h2>
-            <ul>
-              {deployedChannels.map((channel, index) => (
-                <li key={index}>{channel}</li>
-              ))}
-            </ul>
+            <button onClick={() => setShowCreateChannelForm(true)}>Create Channel Form</button>
+            {deployedChannels ? (
+              <div>
+                <h2>Deployed Channels:</h2>
+                <ul>
+                  {deployedChannels.map((channel, index) => (
+                    <li key={index} onClick={() => setSelectedChannelAddress(channel)}>
+                      {channel}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p>Loading deployed channels...</p>
+            )}
           </div>
-        ) : (
-          <p>Loading deployed channels...</p>
         )}
       </header>
     </div>
