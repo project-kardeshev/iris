@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useBlockchain } from './BlockchainContext';
 import './App.css';
 import { getDeployedChannels } from './interactions/channelFactory/getDeployedChannels';
@@ -29,7 +29,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Blockchain Interaction Example</h1>
+        <h1>Iris</h1>
+        <p>No not Irys. We're better.</p>
         {!connectedAddress ? (
           <button onClick={connectWallet}>Connect Wallet</button>
         ) : (

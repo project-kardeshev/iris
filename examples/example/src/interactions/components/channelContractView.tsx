@@ -3,6 +3,7 @@ import { BrowserProvider } from 'ethers';
 import { getChannelInfo } from '../channel/getChannelInfo';
 import { getTokenInfo } from '../video/getTokenInfo';
 import VideoComponent from './videoComponent';
+import MintVideoComponent from './mintVideoForm';
 
 interface ChannelContractViewProps {
   channelAddress: string;
@@ -28,11 +29,16 @@ const ChannelContractView: React.FC<ChannelContractViewProps> = ({ channelAddres
   const [channelInfo, setChannelInfo] = useState<ChannelInfo | null>(null);
   const [videoInfos, setVideoInfos] = useState<VideoInfo[] | null>(null);
   const [selectedVideoAddress, setSelectedVideoAddress] = useState<string | null>(null);
+  const [showMintVideoForm, setShowMintVideoForm] = useState<boolean>(false);
+  const [connectedAddress, setConnectedAddress] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchChannelInfo = async () => {
       try {
         const provider = new BrowserProvider(window.ethereum);
+        const accounts = await provider.listAccounts();
+        setConnectedAddress(accounts[0]?.address || null);
+
         const info = await getChannelInfo(provider, channelAddress);
         setChannelInfo(info);
 
@@ -60,6 +66,10 @@ const ChannelContractView: React.FC<ChannelContractViewProps> = ({ channelAddres
       <button onClick={onBack}>Back</button>
       {selectedVideoAddress ? (
         <VideoComponent videoAddress={selectedVideoAddress} onBack={() => setSelectedVideoAddress(null)} />
+      ) : showMintVideoForm && channelInfo ? (
+        <MintVideoComponent
+          channelAddress={channelAddress}
+        />
       ) : channelInfo ? (
         <div>
           <h2>Channel Info</h2>
@@ -68,6 +78,9 @@ const ChannelContractView: React.FC<ChannelContractViewProps> = ({ channelAddres
           <p>Channel Description: {channelInfo.channelDescription}</p>
           {channelInfo.logo && <img src={channelInfo.logo} alt="Channel Logo" style={{ maxWidth: '200px', maxHeight: '200px' }} />}
           <p>Channel Factory: {channelInfo.channelFactory}</p>
+          {connectedAddress === channelInfo.uploader && (
+            <button onClick={() => setShowMintVideoForm(true)}>Mint Video</button>
+          )}
           <h3>Videos:</h3>
           <ul>
             {videoInfos && videoInfos.length > 0 ? (

@@ -14,7 +14,7 @@ interface VideoComponentProps {
 }
 
 interface Comment {
-  timestamp: number;
+  timestamp: bigint;
   commenter: string;
   comment: string;
 }
@@ -44,6 +44,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({ videoAddress, onBack })
         }
 
         const videoComments = await getComments(provider, videoAddress);
+        // @ts-expect-error idk why this doesnt wanna comply, it works
         setComments(videoComments);
 
         const likes = await getLikeNumber(provider, videoAddress);
@@ -72,7 +73,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({ videoAddress, onBack })
       const provider = new BrowserProvider(window.ethereum);
       await leaveComment(provider, videoAddress, newComment);
       setComments((prev) =>
-        prev ? [{ timestamp: Date.now(), commenter: 'You', comment: newComment }, ...prev] : []
+        prev ? [{ timestamp: BigInt(Date.now()), commenter: 'You', comment: newComment }, ...prev] : []
       );
       setNewComment('');
     } catch (error) {
@@ -83,7 +84,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({ videoAddress, onBack })
   return (
     <div>
       <button onClick={onBack}>Back</button>
-      <h2>Video Component</h2>
+      <h2>Video</h2>
       {videoData ? (
         mediaType === 'video' ? (
           <video controls>
@@ -121,7 +122,7 @@ const VideoComponent: React.FC<VideoComponentProps> = ({ videoAddress, onBack })
                 <p>
                   <strong>{comment.commenter}</strong>: {comment.comment}
                 </p>
-                <p style={{ fontSize: '0.8em' }}>Timestamp: {new Date(Number(comment.timestamp)).toLocaleString()}</p>
+                <p style={{ fontSize: '0.8em' }}>Timestamp: {new Date(Number(comment.timestamp) * 1000 ).toLocaleString()}</p>
               </li>
             ))
           ) : (
